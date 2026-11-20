@@ -1,0 +1,68 @@
+gkd_messung: numpy 2.5.3; Zufalls-Strom SplitMix64 (gkd_rng.py); Zähleinheiten: Punktmengen, Sätze zu 30 Zufalls-Seeds, Eigenwerte
+A. Cholesky gelingt (n = 20, Punkte im Einheitsquadrat, y ~ N(0, I)): 10 Sätze zu je 30 Punktmengen = 300 Punktmengen je Zelle; Grund-Zufalls-Seeds 1000 bis 1009
+   sigma | lambda | gelingt (Summe von 300) | je Satz von 30: Band | davon Fehler > 0,1 (Summe) | > 1e-3 | Median Fehler | Stichprobenmaximum je Satz (Band) | größtes eta | Vorhersage > 1e-3 (Summe) | cond nur Untergrenze (Summe)
+   1 | 0 | 300 | 30 bis 30 (Median 30) | 0 | 1 | 1.84e-07 | 5e-06 bis 0.012 | 7.5e-17 | 1 | 0
+   2 | 0 | 298 | 29 bis 30 (Median 30) | 2 | 73 | 2.68e-04 | 0.0091 bis 0.55 | 8.4e-17 | 70 | 18
+   3 | 0 | 290 | 27 bis 30 (Median 29) | 40 | 257 | 1.26e-02 | 0.15 bis 9.5 | 6.7e-17 | 259 | 175
+   5 | 0 | 156 | 12 bis 19 (Median 16) | 137 | 156 | 4.45e-01 | 1.6 bis 32 | 7.5e-17 | 156 | 300
+   5 | 1e-10 | 300 | 30 bis 30 (Median 30) | 0 | 0 | 1.59e-06 | 2.2e-06 bis 3.2e-06 | 6.7e-17 | 0 | 0
+   5 | 1e-06 | 300 | 30 bis 30 (Median 30) | 0 | 0 | 2.06e-10 | 2.8e-10 bis 3.9e-10 | 1.0e-16 | 0 | 0
+   5 | 0.01 | 300 | 30 bis 30 (Median 30) | 0 | 0 | 2.39e-14 | 2.9e-14 bis 4.5e-14 | 8.9e-17 | 0 | 0
+   Kontrolle der Fehlerverteilung bei sigma = 5, lambda = 0: Anteil der Cholesky-gelungenen Punktmengen mit Fehler > 0,1
+   137 von 156
+
+B. Nugget (n = 20): 5 Bandbreiten sigma = 0,5 / 1 / 2 / 3 / 5, je 30 Punktmengen, drei Werte von lambda = 450 Instanzen; Grund-Zufalls-Seed 2000
+   Instanzen 450; cond über der Schranke 1 + n/lambda: 0; beobachtete Stellen unter R(lambda): 0
+   lambda = 1e-10: R = 4.70; kleinste beobachtete Stellen über die 5 Bandbreiten: 5.43
+   lambda = 1e-06: R = 8.70; kleinste beobachtete Stellen über die 5 Bandbreiten: 9.44
+   lambda = 0.01: R = 12.70; kleinste beobachtete Stellen über die 5 Bandbreiten: 13.39
+   Gegenbefund (Beispiel-Regression, 30 Zufalls-Seeds, Testfehler gegen die Wahrheit), n = 40, sigma = 5, lambda = 1e-8 / 1e-4 / 1e-2 / 0,1: Mittel (Median) / Maximum; je 10 Grund-Zufalls-Seeds 3000 bis 3009, Band der Mittel
+   lambda = 1e-08: Satz-Mittel 0.302901 bis 0.688173 (Median 0.454361); Satz-Median 0.143556 bis 0.333895 (Median 0.245049)
+   lambda = 0.0001: Satz-Mittel 0.157187 bis 0.204825 (Median 0.176383); Satz-Median 0.144051 bis 0.181362 (Median 0.157702)
+   lambda = 0.01: Satz-Mittel 0.289152 bis 0.319848 (Median 0.292443); Satz-Median 0.274786 bis 0.310122 (Median 0.285942)
+   lambda = 0.1: Satz-Mittel 0.339674 bis 0.366585 (Median 0.344474); Satz-Median 0.331811 bis 0.358622 (Median 0.340277)
+   konstante Vorhersage (Satz-Mittel) 0.777227 bis 0.796823 (Median 0.785131)
+   Rechenfehler gegen Modellfehler (n = 40, sigma = 5, 10 Zufalls-Seeds, 200 Testpunkte): exakt / LU, Mittel (Median), 5 Grund-Zufalls-Seeds 3100 bis 3104
+   base 3100: lambda = 0: exakt 1.467e+05 (5317) / LU 2.02e+05 (2266); lambda = 1e-08: exakt 0.2479 (0.2256) / LU 0.2479 (0.2256); lambda = 0.0001: exakt 0.1524 (0.1413) / LU 0.1524 (0.1413); Konstante 0.7749
+   base 3101: lambda = 0: exakt 2.232e+05 (4630) / LU 6.88e+04 (4231); lambda = 1e-08: exakt 0.3655 (0.2182) / LU 0.3655 (0.2182); lambda = 0.0001: exakt 0.1472 (0.1504) / LU 0.1472 (0.1504); Konstante 0.7547
+   base 3102: lambda = 0: exakt 1.064e+04 (588.4) / LU 1.295e+04 (534.9); lambda = 1e-08: exakt 0.2961 (0.2329) / LU 0.2961 (0.2329); lambda = 0.0001: exakt 0.1783 (0.1465) / LU 0.1783 (0.1465); Konstante 0.7796
+   base 3103: lambda = 0: exakt 1.44e+05 (8620) / LU 1.386e+05 (5.527e+04); lambda = 1e-08: exakt 0.6387 (0.1957) / LU 0.6387 (0.1957); lambda = 0.0001: exakt 0.1492 (0.1361) / LU 0.1492 (0.1361); Konstante 0.7663
+   base 3104: lambda = 0: exakt 9.801e+04 (6055) / LU 7.1e+04 (2.054e+04); lambda = 1e-08: exakt 0.4129 (0.3124) / LU 0.4129 (0.3124); lambda = 0.0001: exakt 0.1522 (0.141) / LU 0.1522 (0.141); Konstante 0.7652
+
+C. Fläche sigma x lambda (n = 60, Rauschen 0,3, 30 Zufalls-Seeds), 20 Grund-Zufalls-Seeds 4000 bis 4019
+   beste Zelle (Zählung über 20 Sätze): {(1.6, 0.01): 19, (0.8, 0.1): 1}
+   Testfehler der besten Zelle: 0.0455193 bis 0.0652873 (Median 0.0515017); LOO-gewählt: 0.0549306 bis 0.0940753 (Median 0.0690151); im Rückblick je Zufalls-Seed beste Zelle: 0.041583 bis 0.0552344 (Median 0.0463261); konstante Vorhersage 0.772944 bis 0.79123 (Median 0.777672)
+   Zelle (0,8; 1e-6) als Vielfaches der Konstanten: 18.5226 bis 40.4288 (Median 28.0931); schlechteste Zelle als Vielfaches der Konstanten: 18.5226 bis 40.4288 (Median 28.0931)
+   sigma = 6,4: lambda = 1e-6: 0.075523 bis 0.106611 (Median 0.0795085); lambda = 10: 0.675997 bis 0.69295 (Median 0.681585)
+
+D. Ridgeless (Interpolation) und Leave-one-out, Beispiel-Regression, n = 60: 60 Sätze zu je 30 Zufalls-Seeds je sigma, Grund-Zufalls-Seed 5000
+   sigma = 0.3: Satz-Median 0.285309 bis 0.496377 (Median 0.358653); Satz-Mittel 0.352266 bis 6.77466 (Median 0.655437); über der Konstanten in 288 von 1800 Instanzen; Satz-Median der LOO-Wahl 0.15814 bis 0.200621 (Median 0.178337); Konstante 0.778; Sätze mit Satz-Mittel unter der Konstanten: 34 von 60; gewähltes lambda: {1e-06: 24, 0.0001: 11, 0.01: 199, 0.1: 1559, 1.0: 7}
+   sigma = 1: Satz-Median 150.324 bis 2892.47 (Median 449.164); Satz-Mittel 496.454 bis 164455 (Median 5049.37); über der Konstanten in 1800 von 1800 Instanzen; Satz-Median der LOO-Wahl 0.0450237 bis 0.063338 (Median 0.0529987); Konstante 0.778; Sätze mit Satz-Mittel unter der Konstanten: 0 von 60; gewähltes lambda: {0.0001: 3, 0.01: 304, 0.1: 1486, 1.0: 7}
+   sigma = 3: Satz-Median 4.43327 bis 25.1996 (Median 10.5621); Satz-Mittel 12.1639 bis 122.983 (Median 28.2153); über der Konstanten in 1750 von 1800 Instanzen; Satz-Median der LOO-Wahl 0.0424763 bis 0.0723121 (Median 0.0511608); Konstante 0.778; Sätze mit Satz-Mittel unter der Konstanten: 0 von 60; gewähltes lambda: {1e-06: 202, 0.0001: 1576, 0.01: 22}
+   Abhängigkeit von tau (sigma = 1, n = 60): siehe gkd_frozen.json (tau_reihe) und n-Reihe (n_reihe)
+
+E. Flat Limit exakt (deterministisch, kein Zufall)
+   x = (0, 1, 2, 3, 4): c_m = ['5', '10', '7', '12/5', '12/35']
+   k = 2: Verhältnis exakt / Leiter [0.961872, 0.934931, 0.951832, 0.967814, 0.988144]; cond exakt 8.69584e+07, Leiter 8.93335e+07
+   k = 6: Verhältnis exakt / Leiter [0.999996, 0.999993, 0.999995, 0.999997, 0.999999]; cond exakt 9.11454e+23, Leiter 9.11457e+23
+   k = 8: Verhältnis exakt / Leiter [1.0, 1.0, 1.0, 1.0, 1.0]; cond exakt 9.11458e+31, Leiter 9.11458e+31
+   x = (0, 1, 3, 4, 7): c_m = ['5', '30', '72', '174/5', '1764/145']
+   n = 6, x = 0..5, k = 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9 / 10 / 12:
+   echt in Gleitkomma: [6, 6, 5, 4, 3, 3, 3, 2, 2, 2]; gerundete Matrix: [6, 6, 5, 4, 3, 3, 3, 3, 2, 2]; Vorhersage: [6, 6, 4, 4, 3, 3, 2, 2, 2, 2]
+   kleinster Eigenwert der gerundeten Matrix negativ: [False, False, True, True, False, True, True, True, True, True]; Gleitkomma negativ: [False, False, True, True, True, True, True, True, True, True]
+   Cholesky gelingt: [True, True, True, False, False, False, False, False, False, False]
+
+F. Zahl echter Eigenwerte (Schwelle 1e-16 · lambda_max), je drei Punktmengen (Grund-Zufalls-Seeds 6000 bis 6002), Gauß-Kern
+   1D, Punkte gleichverteilt auf [0, 1]: n = 20 / 50 / 100 (Bereich über die 3 Punktmengen)
+      sigma = 0.05: 20 / 45 bis 49 / 60
+      sigma = 0.2: 14 bis 18 / 23 bis 24 / 25 bis 26
+      sigma = 1: 8 bis 9 / 12 bis 13 / 15 bis 16
+      sigma = 3: 6 bis 7 / 9 bis 12 / 13
+   2D, Punkte gleichverteilt im Einheitsquadrat: n = 20 / 50 / 100 (Bereich über die 3 Punktmengen)
+      sigma = 0.05: 20 / 50 / 100
+      sigma = 0.2: 20 / 50 / 100
+      sigma = 1: 20 / 43 bis 44 / 51 bis 53
+      sigma = 3: 19 / 27 bis 28 / 28 bis 30
+
+G. Leave-one-out in Gleitkomma gegen exakt (n = 20, Beispiel-Regression, 30 Zufalls-Seeds je sigma, 8 Werte von lambda 1e-10 bis 10)
+   gewähltes lambda gleich (Eigenzerlegung gegen exakt): 60 von 60; größter relativer Fehler der LOO-MSE 2.4e-02
