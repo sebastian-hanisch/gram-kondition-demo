@@ -162,7 +162,7 @@ def test_frozen_tau_series_sigma_one_falls_with_tau_and_sigma_small_does_not_dep
 def test_frozen_exact_interpolation_equals_floating_point_except_possibly_in_the_extreme_tail():
     g = FROZEN["exakt_gleit"]
     assert g["seeds"] >= 40 and g["ratio_close"] >= g["seeds"] - 2                # README: exakte und Gleitkomma-Interpolation im Testfehler gleich (Verhältnis 0,9 bis 1,1)
-    assert 1e7 < g["norm_median"] < 1e9 and 6 < g["label_norm_median"] < 8        # README: ‖a_exakt‖ im Median 6,5e7 gegen Etiketten-Norm 7,1
+    assert 1e7 < g["norm_median"] < 1e9 and 6 < g["label_norm_median"] < 8        # README: ‖a_exakt‖ im Median 6,5e7 gegen Labels-Norm 7,1
     assert g["median_exact"] == pytest.approx(g["median_float"], rel=1e-2)
 
 

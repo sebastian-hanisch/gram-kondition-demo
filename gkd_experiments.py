@@ -129,7 +129,7 @@ class ModelRow:
 
 
 def nugget_testfehler(n: int, sigma: float, base: int, seeds: int = C.RIDGE_INSTANZEN, lams=C.NUGGET_TEST_LAMS) -> tuple[tuple[ModelRow, ...], float]:
-    """Gegenbefund: ein Nugget ändert das Modell. Beispiel-Regression (Rauschen sd 0,3, Etiketten zentriert), Testfehler gegen die Wahrheit auf 1000 rauschfreien Testpunkten;
+    """Gegenbefund: ein Nugget ändert das Modell. Beispiel-Regression (Rauschen sd 0,3, Labels zentriert), Testfehler gegen die Wahrheit auf 1000 rauschfreien Testpunkten;
     Mittel, Median und Maximum über `seeds` Zufalls-Seeds je λ und der Fehler der konstanten Vorhersage (Mittel)."""
     Xte, fte = S.reg_test_points()
     errs = {lam: [] for lam in lams}
@@ -158,7 +158,7 @@ class SolverVsModel:
 
 def solver_vs_model(n: int, sigma: float, base: int, seeds: int = 10, n_test: int = 200, lams=(0.0, 1e-8, 1e-4)) -> tuple[tuple[SolverVsModel, ...], float]:
     """Rechenfehler gegen Modellfehler: Testfehler gegen die Wahrheit der EXAKTEN Lösung und der LU (Beispiel-Regression, `seeds` Zufalls-Seeds, `n_test` Testpunkte,
-    Etiketten zentriert). Ändert der Löser den Testfehler nicht, dominiert der Modellfehler. Gibt auch den Fehler der konstanten Vorhersage (Mittel)."""
+    Labels zentriert). Ändert der Löser den Testfehler nicht, dominiert der Modellfehler. Gibt auch den Fehler der konstanten Vorhersage (Mittel)."""
     Xte, fte = S.reg_test_points(n_test)
     ex = {lam: [] for lam in lams}
     lu = {lam: [] for lam in lams}

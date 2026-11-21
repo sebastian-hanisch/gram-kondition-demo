@@ -250,7 +250,7 @@ def verdict_exakt_gleit(frozen: dict) -> tuple[str, str]:
         return "info", "Die vorgerechnete Gegenprobe exakt gegen Gleitkomma liegt nicht vor (Datei gkd_frozen.json fehlt)."
     text = (f"Ist es die Rundung? Vorgerechnet, n = 60, σ = 1, {z['seeds']} frische Zufalls-Seeds: die exakte Interpolation liefert in {z['ratio_close']} von {z['seeds']} Zufalls-Seeds denselben Testfehler "
             f"wie die Eigenzerlegung bei τ = 1e-13 (Verhältnis zwischen 0,9 und 1,1); die Norm der exakten Koeffizienten liegt im Median bei {sci(z['norm_median'], 1)} "
-            f"(Norm der Etiketten etwa {de(z['label_norm_median'], 2)}). Die Rundung ist im Median und in Zufalls-Seeds mit ‖a‖ unter 1e10 nicht die Ursache; die Ursache ist die Konditionszahl "
+            f"(Norm der Labels etwa {de(z['label_norm_median'], 2)}). Die Rundung ist im Median und in Zufalls-Seeds mit ‖a‖ unter 1e10 nicht die Ursache; die Ursache ist die Konditionszahl "
             "(das Rauschen in y wird mit 1/λ_klein verstärkt). ")
     large_close = z["ratio_close"] - z["small_norm_close"]                       # Zufalls-Seeds mit ‖a‖ ≥ 1e10, in denen der Testfehler trotzdem gleich bleibt
     span = f"Verhältnis {z['ratio_min']:.4f} bis {z['ratio_max']:.4f} über alle {z['seeds']} Zufalls-Seeds".replace(".", ",")

@@ -138,7 +138,7 @@ def test_streuung_and_exakt_gleit_verdicts_use_the_frozen_numbers():
     assert "fehlt" in V.verdict_streuung({})[1] and "fehlt" in V.verdict_exakt_gleit({})[1]
     g = {"seeds": 40, "ratio_close": 39, "ratio_min": 0.99, "ratio_max": 40.0, "norm_median": 1.1e8, "norm_max": 2e11, "label_norm_median": 7.2, "large_norm": 1, "small_norm_close": 39}
     text = V.verdict_exakt_gleit({"exakt_gleit": g})[1]
-    assert "in 39 von 40 Zufalls-Seeds denselben Testfehler" in text and "im Median bei 1,1e8" in text and "Norm der Etiketten etwa 7,2" in text
+    assert "in 39 von 40 Zufalls-Seeds denselben Testfehler" in text and "im Median bei 1,1e8" in text and "Norm der Labels etwa 7,2" in text
     assert "In 1 von 1 Zufalls-Seeds mit ‖a‖ ≥ 1e10 (größte Norm 2,0e11) weichen exakte und Gleitkomma-Rechnung ab (Verhältnis 0,9900 bis 40,0000 über alle 40 Zufalls-Seeds)" in text and "Regularisierung" in text
     g_same = dict(g, ratio_close=40, small_norm_close=39, ratio_min=0.9998, ratio_max=1.0001)
     text = V.verdict_exakt_gleit({"exakt_gleit": g_same})[1]

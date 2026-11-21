@@ -134,7 +134,7 @@ with st.sidebar:
 
     st.markdown("**Experiment 1: Fläche σ × λ**")
     n_a = st.slider("Punkte n", *bounds("n_flaeche"), key="n_flaeche", step=10, help="Trainingspunkte der Beispiel-Regression.")
-    noise_a = st.slider("Rauschen (Standardabweichung)", *bounds("noise_flaeche"), key="noise_flaeche", step=0.05, help="Rauschen der Etiketten.")
+    noise_a = st.slider("Rauschen (Standardabweichung)", *bounds("noise_flaeche"), key="noise_flaeche", step=0.05, help="Rauschen der Labels.")
     seeds_a = st.slider("Zufalls-Seeds", *bounds("seeds_flaeche"), key="seeds_flaeche", help="Über so viele Zufalls-Seeds wird der Testfehler je Zelle gemittelt.")
 
 sync_query_params({
@@ -189,7 +189,7 @@ st.caption(T.FLAECHE_CAPTION)
 with st.spinner(f"Fläche aus {len(C.FLAECHE_SIGMAS) * len(C.FLAECHE_LAMS)} Zellen über {seeds_a} Zufalls-Seeds …"):
     surf = _surface(n_a, float(noise_a), seeds_a, seed)
 st.plotly_chart(Viz.build_surface(surf), width="stretch", key="chart_surface")
-st.caption(f"Weißer Rahmen: beste Zelle. Konstante Vorhersage (Mittelwert der Etiketten): Testfehler {de(surf.const_mean)}.")
+st.caption(f"Weißer Rahmen: beste Zelle. Konstante Vorhersage (Mittelwert der Labels): Testfehler {de(surf.const_mean)}.")
 show(V.verdict_flaeche(surf, n_a, float(noise_a)))
 
 st.markdown("---")
